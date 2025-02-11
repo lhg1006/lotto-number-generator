@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://lotto-number-generator-gnok1nnr6-hyo1006s-projects.vercel.app/',
+    url: 'https://lotto-number-generator-pi.vercel.app/',
     title: '로또 번호 추첨기 | 무료 로또 번호 생성',
     description: '무료 로또 번호 생성기로 1부터 45까지의 숫자 중에서 랜덤하게 6개의 번호를 뽑아보세요. 한 번에 여러 줄 생성도 가능하며, 번호별 색상 구분과 히스토리 기능을 제공합니다.',
     siteName: '로또 번호 추첨기',
