@@ -150,20 +150,20 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-800 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-white mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 p-3 md:p-6">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300 mb-6">
           로또 번호 추첨기
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <div className="w-full">
-            <div className="bg-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
-              <div className="relative mb-8">
-                <div className={`w-32 h-32 md:w-40 md:h-40 border-8 border-blue-500 rounded-full ${
+            <div className="backdrop-blur-xl bg-white/10 p-4 md:p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 h-full">
+              <div className="flex justify-center items-center relative mb-6">
+                <div className={`w-28 h-28 md:w-32 md:h-32 backdrop-blur-3xl bg-gradient-to-br from-purple-400/40 to-pink-400/40 rounded-full ${
                   isSpinning ? "animate-spin" : ""
-                } flex items-center justify-center transition-all duration-300`}>
-                  <div className="text-3xl md:text-4xl font-bold text-blue-700">
+                } flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.4)]`}>
+                  <div className="text-3xl md:text-4xl font-bold text-white">
                     {numbers[numbers.length - 1] || "?"}
                   </div>
                 </div>
@@ -172,32 +172,32 @@ export default function Home() {
               <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6 w-full max-w-md mx-auto place-items-center">
                 {[...Array(6)].map((_, index) => (
                   <div key={index}
-                    className="bg-yellow-400 text-blue-700 text-lg sm:text-xl md:text-2xl font-bold rounded-full 
-                      w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center shadow-md 
-                      transform hover:scale-105 transition-transform duration-200">
+                    className="backdrop-blur-md bg-gradient-to-br from-purple-400/20 to-pink-400/20 text-white text-lg sm:text-xl md:text-2xl font-bold rounded-xl
+                      w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center shadow-lg
+                      transform hover:scale-105 transition-all duration-300 border border-white/10">
                     {numbers[index] || "?"}
                   </div>
                 ))}
               </div>
 
-              <div className="w-full mb-6 p-3 sm:p-4 bg-blue-100 rounded-lg">
+              <div className="w-full max-w-sm mx-auto mb-6 p-3 sm:p-4 backdrop-blur-md bg-white/5 rounded-xl border border-white/10">
                 <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
                   {sortedNumbers.length > 0 ? (
                     sortedNumbers.map((number, index) => (
                       <div key={index}
-                        className={`${getNumberColor(number.toString())} text-base sm:text-lg md:text-xl 
-                          font-bold rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 
-                          flex items-center justify-center shadow-md
-                          transform hover:scale-110 transition-transform duration-200`}>
+                        className={`${getNumberColor(number.toString())} text-base sm:text-lg
+                          font-bold rounded-lg w-8 h-8 sm:w-10 sm:h-10
+                          flex items-center justify-center shadow-lg backdrop-blur-sm
+                          transform hover:scale-110 transition-all duration-300 hover:shadow-xl`}>
                         {number}
                       </div>
                     ))
                   ) : (
                     [...Array(6)].map((_, index) => (
                       <div key={index}
-                        className="bg-gray-200 text-gray-400 text-base sm:text-lg md:text-xl 
-                          font-bold rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 
-                          flex items-center justify-center shadow-md">
+                        className="backdrop-blur-md bg-white/5 text-white/40 text-base sm:text-lg
+                          font-bold rounded-lg w-8 h-8 sm:w-10 sm:h-10
+                          flex items-center justify-center shadow-lg border border-white/10">
                         ?
                       </div>
                     ))
@@ -205,73 +205,75 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 w-full max-w-md mb-4">
+              <div className="flex flex-col items-center w-full gap-2 sm:gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 w-full max-w-sm">
+                  <Button
+                    onClick={generateNumber}
+                    disabled={isSpinning}
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3
+                      rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg
+                      text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm">
+                    {isSpinning ? "추첨 중..." : "번호 뽑기"}
+                  </Button>
+
+                  <Button
+                    onClick={generateAllNumbers}
+                    disabled={isSpinning}
+                    className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3
+                      rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg
+                      text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm">
+                    전체 번호 뽑기
+                  </Button>
+                </div>
+
                 <Button
-                  onClick={generateNumber}
+                  onClick={generateFiveLines}
                   disabled={isSpinning}
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 
-                    rounded-lg transition duration-300 ease-in-out transform hover:scale-105 
-                    text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed">
-                  {isSpinning ? "추첨 중..." : "번호 뽑기"}
+                  className="w-full max-w-sm bg-gradient-to-r from-green-400 via-emerald-500 to-teal-600 hover:from-green-500 hover:via-emerald-600 hover:to-teal-700 text-white font-bold py-3
+                    rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg
+                    text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm">
+                  다섯줄 뽑기
                 </Button>
 
                 <Button
-                  onClick={generateAllNumbers}
-                  disabled={isSpinning}
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 
-                    rounded-lg transition duration-300 ease-in-out transform hover:scale-105
-                    text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed">
-                  전체 번호 뽑기
+                  onClick={reset}
+                  variant="outline"
+                  className="w-full max-w-sm backdrop-blur-md bg-white/5 text-white border border-white/20
+                    hover:bg-white/10 font-bold py-3 rounded-lg transition-all duration-300
+                    text-sm sm:text-base transform hover:scale-[1.02] hover:shadow-lg">
+                  리셋
                 </Button>
               </div>
-
-              <Button
-                onClick={generateFiveLines}
-                disabled={isSpinning}
-                className="w-full max-w-md mb-4 bg-purple-500 hover:bg-purple-600 text-white 
-                  font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition duration-300 ease-in-out 
-                  text-sm sm:text-base transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-                다섯줄 뽑기
-              </Button>
-
-              <Button
-                onClick={reset}
-                variant="outline"
-                className="w-full max-w-md border-2 border-blue-500 text-blue-500 
-                  hover:bg-blue-50 font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition duration-300 
-                  text-sm sm:text-base ease-in-out transform hover:scale-105">
-                리셋
-              </Button>
             </div>
           </div>
 
           <div className="w-full">
-            <div className="bg-white p-3 sm:p-4 md:p-8 rounded-lg shadow-md h-full">
-              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-blue-700">
+            <div className="backdrop-blur-xl bg-white/10 p-4 md:p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 h-full">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300">
                 히스토리
               </h2>
               {isLoading ? (
                 <div className="flex justify-center items-center h-24 sm:h-32">
-                  <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-blue-500" />
+                  <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 border-4 border-purple-400 border-t-transparent" />
                 </div>
               ) : (
                 <ul className="space-y-3 sm:space-y-4">
                   {lotteryResults.map((result, index) => (
                     <li key={index}
-                      className="flex flex-col items-center space-y-1.5 sm:space-y-2 p-2 sm:p-3 
-                        hover:bg-gray-50 rounded-lg transition-all duration-200">
+                      className="flex flex-col items-center space-y-1.5 sm:space-y-2 p-3 sm:p-4
+                        hover:bg-white/5 rounded-lg transition-all duration-300 backdrop-blur-sm border border-white/10">
                       <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
                         {result.numbers.map((number, idx) => (
                           <span key={idx}
-                            className={`w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center 
-                              justify-center font-bold text-sm sm:text-base md:text-lg rounded-full
-                              transform hover:scale-110 transition-transform duration-200
+                            className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center
+                              justify-center font-bold text-sm sm:text-base rounded-lg
+                              transform hover:scale-110 transition-all duration-300 shadow-lg
                               ${getNumberColor(number.toString())}`}>
                             {number}
                           </span>
                         ))}
                       </div>
-                      <span className="text-xs sm:text-sm text-gray-500">
+                      <span className="text-xs sm:text-sm text-white/60">
                         {new Date(result.timestamp).toLocaleString('ko-KR')}
                       </span>
                     </li>
@@ -281,6 +283,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* 푸터 추가 */}
+        <footer className="mt-8 text-center">
+          <p className="text-sm text-white/60 font-light">
+            © 2025 lhg1006. All rights reserved.
+          </p>
+        </footer>
       </div>
     </div>
   )
