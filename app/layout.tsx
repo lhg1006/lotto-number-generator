@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   publisher: 'lhg1006',
   robots: 'index, follow',
   icons: {
-    icon: '/favicon/icon.png',
-    shortcut: '/favicon/favicon.ico',
-    apple: '/favicon/apple-icon.png',
+    icon: '/icon.png',
+    shortcut: '/favicon.ico',
+    apple: '/apple-icon.png',
     other: {
       rel: 'apple-touch-icon',
-      url: '/favicon/apple-icon.png',
+      url: '/apple-icon.png',
     },
   },
   openGraph: {
