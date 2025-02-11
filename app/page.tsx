@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import GoogleAdsense from '@/components/GoogleAdsense'
 
 interface LotteryResult {
   numbers: number[]
