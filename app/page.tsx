@@ -42,9 +42,21 @@ export default function Home() {
   }
 
   const generateNumber = () => {
-    if (numbers.length >= 6) return
-    setIsSpinning(true)
+    if (numbers.length >= 6) {
+      setNumbers([])
+      setSortedNumbers([])
+      setIsComplete(false)
+      setIsSpinning(true)
 
+      setTimeout(() => {
+        const newNumber = Math.floor(Math.random() * 45) + 1
+        setNumbers([newNumber])
+        setIsSpinning(false)
+      }, 1000)
+      return
+    }
+    
+    setIsSpinning(true)
     setTimeout(() => {
       let newNumber
       do {
@@ -144,30 +156,8 @@ export default function Home() {
           로또 번호 추첨기
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-4 md:gap-8">
-          <div className="hidden lg:block space-y-4 sticky top-4 self-start">
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <GoogleAdsense
-                client="ca-pub-XXXXXXXXXXXXXXXX"
-                slot="SLOT_ID_2"
-                style={{ display: 'block', minHeight: '280px' }}
-                format="auto"
-                responsive="true"
-              />
-            </div>
-          </div>
-
-          <div className="lg:col-span-1 space-y-8">
-            <div className="lg:hidden bg-white p-4 rounded-lg shadow-md min-h-[100px] w-full">
-              <GoogleAdsense
-                client="ca-pub-XXXXXXXXXXXXXXXX"
-                slot="SLOT_ID_1"
-                style={{ minHeight: '100px' }}
-                format="auto"
-                responsive="true"
-              />
-            </div>
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+          <div className="w-full">
             <div className="bg-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
               <div className="relative mb-8">
                 <div className={`w-32 h-32 md:w-40 md:h-40 border-8 border-blue-500 rounded-full ${
@@ -190,28 +180,39 @@ export default function Home() {
                 ))}
               </div>
 
-              {numbers.length > 0 && (
-                <div className="w-full mb-6 p-3 sm:p-4 bg-blue-100 rounded-lg">
-                  <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
-                    {sortedNumbers.map((number, index) => (
+              <div className="w-full mb-6 p-3 sm:p-4 bg-blue-100 rounded-lg">
+                <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
+                  {sortedNumbers.length > 0 ? (
+                    sortedNumbers.map((number, index) => (
                       <div key={index}
-                        className="bg-white text-blue-700 text-base sm:text-lg md:text-xl font-bold rounded-full 
-                          w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center shadow-md">
+                        className={`${getNumberColor(number.toString())} text-base sm:text-lg md:text-xl 
+                          font-bold rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 
+                          flex items-center justify-center shadow-md
+                          transform hover:scale-110 transition-transform duration-200`}>
                         {number}
                       </div>
-                    ))}
-                  </div>
+                    ))
+                  ) : (
+                    [...Array(6)].map((_, index) => (
+                      <div key={index}
+                        className="bg-gray-200 text-gray-400 text-base sm:text-lg md:text-xl 
+                          font-bold rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 
+                          flex items-center justify-center shadow-md">
+                        ?
+                      </div>
+                    ))
+                  )}
                 </div>
-              )}
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 w-full max-w-md mb-4">
                 <Button
                   onClick={generateNumber}
-                  disabled={isComplete || isSpinning}
+                  disabled={isSpinning}
                   className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 
                     rounded-lg transition duration-300 ease-in-out transform hover:scale-105 
                     text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed">
-                  {isComplete ? "완료" : isSpinning ? "추첨 중..." : "번호 뽑기"}
+                  {isSpinning ? "추첨 중..." : "번호 뽑기"}
                 </Button>
 
                 <Button
@@ -242,33 +243,12 @@ export default function Home() {
                 리셋
               </Button>
             </div>
+          </div>
 
-            {multipleLines.length > 0 && (
-              <div className="bg-white p-3 sm:p-4 md:p-6 rounded-lg shadow-md">
-                <h3 className="text-lg sm:text-xl font-semibold text-purple-700 mb-3 sm:mb-4 text-center">
-                  다섯줄 번호
-                </h3>
-                <div className="space-y-2 sm:space-y-3">
-                  {multipleLines.map((line, lineIndex) => (
-                    <div key={lineIndex} 
-                      className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1.5 sm:p-2">
-                      {line.map((number, numberIndex) => (
-                        <div key={numberIndex}
-                          className="bg-white text-purple-700 text-xs sm:text-sm md:text-base 
-                            font-bold rounded-full w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 
-                            flex items-center justify-center shadow-md">
-                          {number}
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="bg-white p-3 sm:p-4 md:p-8 rounded-lg shadow-md">
+          <div className="w-full">
+            <div className="bg-white p-3 sm:p-4 md:p-8 rounded-lg shadow-md h-full">
               <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-blue-700">
-                내 번호 히스토리
+                히스토리
               </h2>
               {isLoading ? (
                 <div className="flex justify-center items-center h-24 sm:h-32">
@@ -298,30 +278,6 @@ export default function Home() {
                   ))}
                 </ul>
               )}
-            </div>
-
-            <div className="lg:hidden bg-white p-4 rounded-lg shadow-md">
-              <GoogleAdsense
-                client="ca-pub-XXXXXXXXXXXXXXXX"
-                slot="SLOT_ID_3"
-                style={{ display: 'block' }}
-                format="auto"
-                responsive="true"
-              />
-            </div>
-          </div>
-
-          <div className="hidden lg:block space-y-4">
-            <div className="sticky top-4">
-              <div className="bg-white p-4 rounded-lg shadow-md">
-                <GoogleAdsense
-                  client="ca-pub-XXXXXXXXXXXXXXXX"
-                  slot="SLOT_ID_4"
-                  style={{ display: 'block', minHeight: '280px' }}
-                  format="auto"
-                  responsive="true"
-                />
-              </div>
             </div>
           </div>
         </div>
