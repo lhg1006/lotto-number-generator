@@ -2,6 +2,11 @@
 
 무료로 로또 번호를 생성할 수 있는 웹 애플리케이션입니다. 1부터 45까지의 숫자 중에서 랜덤하게 6개의 번호를 뽑을 수 있으며, 한 번에 여러 줄 생성도 가능합니다.
 
+## 📱 데모
+
+[https://lotto-number-generator-pi.vercel.app/](https://lotto-number-generator-pi.vercel.app/)
+
+
 ![로또 번호 추첨기 스크린샷](https://raw.githubusercontent.com/lhg1006/portfolio-images/a3ed392a2921be631bc8d94977ee17c8f26fb0d6/images/project/ltg-0.png)
 
 ## 🌟 주요 기능
@@ -47,6 +52,3 @@ yarn dev
 
 5. 브라우저에서 [http://localhost:3000](http://localhost:3000) 접속
 
-## 📱 데모
-
-[https://lotto-number-generator-pi.vercel.app/](https://lotto-number-generator-pi.vercel.app/)
